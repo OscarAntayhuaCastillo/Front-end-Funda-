@@ -1,0 +1,68 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>{{editMode ? 'Edit Classroom' : 'Create Classroom'}}</h2>
+  
+  <form [formGroup]="classroomForm" (ngSubmit)="onSubmit()" class="classroom-form">
+    <mat-dialog-content>
+      <h3 class="form-subtitle">{{editMode ? 'Edit Classroom' : 'Create New Classroom'}}</h3>
+      
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Section</mat-label>
+          <input matInput placeholder="Enter section" formControlName="section">
+          <mat-hint>e.g., A, B, C</mat-hint>
+          <mat-error *ngIf="classroomForm.get('section')?.hasError('required')">
+            Section is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Room Number</mat-label>
+          <input matInput placeholder="Enter room number" formControlName="roomNumber">
+          <mat-hint>e.g., 101, 102, 103</mat-hint>
+          <mat-error *ngIf="classroomForm.get('roomNumber')?.hasError('required')">
+            Room number is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Capacity</mat-label>
+          <input matInput type="number" placeholder="Enter capacity" formControlName="capacity" min="1">
+          <mat-hint>Maximum number of students</mat-hint>
+          <mat-error *ngIf="classroomForm.get('capacity')?.hasError('required')">
+            Capacity is required
+          </mat-error>
+          <mat-error *ngIf="classroomForm.get('capacity')?.hasError('min')">
+            Capacity must be greater than 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Grade</mat-label>
+          <mat-select formControlName="gradeId">
+            <mat-option *ngFor="let grade of grades" [value]="grade.id">
+              {{grade.level}} - {{grade.name}}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Select the academic grade</mat-hint>
+          <mat-error *ngIf="classroomForm.get('gradeId')?.hasError('required')">
+            Grade is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancel()" [disabled]="isLoading">
+        Cancel
+      </button>
+      <button mat-button type="reset" [disabled]="isLoading" class="clear-button">
+        Clear
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="classroomForm.invalid || isLoading">
+        <mat-progress-spinner mode="indeterminate" diameter="20" *ngIf="isLoading" class="spinner">
+        </mat-progress-spinner>
+        <span *ngIf="!isLoading">{{editMode ? 'Update Classroom' : 'Create Classroom'}}</span>
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

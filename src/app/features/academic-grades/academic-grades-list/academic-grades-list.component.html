@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="header">
+    <h1>Grados Académicos</h1>
+    <button mat-raised-button color="primary" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      Crear Grado
+    </button>
+  </div>
+
+  <div class="content" *ngIf="!isLoading; else loadingTemplate">
+    <mat-table [dataSource]="academicGrades" class="mat-elevation-z8">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let grade"> {{grade.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Level Column -->
+      <ng-container matColumnDef="level">
+        <mat-header-cell *matHeaderCellDef> Nivel </mat-header-cell>
+        <mat-cell *matCellDef="let grade"> {{grade.level}} </mat-cell>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let grade">
+          <div class="action-buttons">
+            <button mat-mini-fab 
+                    color="primary" 
+                    class="edit-button" 
+                    (click)="openEditDialog(grade)" 
+                    matTooltip="Editar"
+                    style="margin-right: 8px;">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab 
+                    color="warn" 
+                    class="delete-button" 
+                    (click)="deleteAcademicGrade(grade)" 
+                    matTooltip="Eliminar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <div class="no-data" *ngIf="academicGrades.length === 0">
+      <p>No hay grados académicos registrados</p>
+    </div>
+  </div>
+
+  <ng-template #loadingTemplate>
+    <div class="loading">
+      <mat-spinner></mat-spinner>
+      <p>Cargando grados académicos...</p>
+    </div>
+  </ng-template>
+</div> 

@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Agregar Equipo</h1>
+<div mat-dialog-content>
+    <mat-form-field class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="data.name" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" [(ngModel)]="data.quantity" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label>Presupuesto</mat-label>
+        <input matInput type="number" [(ngModel)]="data.budget" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label>Periodo (meses)</mat-label>
+        <input matInput type="number" [(ngModel)]="data.period" required>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions class="actions">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" >Add</button>
+</div>

@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>{{isEditMode ? 'Editar Profesor' : 'Registrar Profesor'}}</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombres</mat-label>
+        <input matInput [(ngModel)]="data.firstName" placeholder="Ingresa los nombres">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Apellido Paterno</mat-label>
+        <input matInput [(ngModel)]="data.lastNameFather" placeholder="Ingresa el apellido paterno">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Apellido Materno</mat-label>
+        <input matInput [(ngModel)]="data.lastNameMother" placeholder="Ingresa el apellido materno">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="data.email" type="email" placeholder="Ingresa el email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Teléfono</mat-label>
+        <input matInput [(ngModel)]="data.phone" placeholder="Ingresa el teléfono">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width" *ngIf="!isEditMode">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [(ngModel)]="data.password" type="password" placeholder="Ingresa la contraseña">
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width" *ngIf="isEditMode">
+        <mat-label>Nueva Contraseña (opcional)</mat-label>
+        <input matInput [(ngModel)]="data.password" type="password" placeholder="Deja vacío para mantener la contraseña actual">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions class="actions">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" 
+            [disabled]="!data.firstName || !data.lastNameFather || !data.lastNameMother || !data.email || !data.phone || (!isEditMode && !data.password)">
+        {{isEditMode ? 'Actualizar' : 'Registrar'}}
+    </button>
+</div>
